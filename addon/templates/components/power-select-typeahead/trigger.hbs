@@ -1,6 +1,6 @@
+{{! template-lint-disable no-pointer-down-event-binding }}
 <input type="search"
   value={{this.text}}
-  role="combobox"
   id="ember-power-select-typeahead-input-{{@select.uniqueId}}"
   class="ember-power-select-typeahead-input ember-power-select-search-input"
   autocomplete="off"
@@ -12,8 +12,8 @@
   onfocus={{@onFocus}}
   onblur={{@onBlur}}
   disabled={{@select.disabled}}
-  onkeydown={{action "handleKeydown"}}
-  onmousedown={{action "stopPropagation"}}>
+  onkeydown={{this.handleKeydown}}
+  onmousedown={{this.stopPropagation}}>
 {{#if @select.loading}}
   <span class="ember-power-select-typeahead-loading-indicator"></span>
 {{/if}}
