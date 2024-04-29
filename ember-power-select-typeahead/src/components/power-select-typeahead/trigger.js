@@ -1,12 +1,13 @@
-/* eslint-disable ember/no-get, ember/no-observers */
+/* eslint-disable ember/no-observers */
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { action, get, set } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { schedule } from '@ember/runloop';
 import { isBlank } from '@ember/utils';
+import { action } from '@ember/object';
 
 export default class PowerSelectTypeaheadTrigger extends Component {
-  text = '';
+  @tracked text = '';
 
   constructor() {
     super(...arguments);
@@ -28,8 +29,8 @@ export default class PowerSelectTypeaheadTrigger extends Component {
    * @method onUpdatedAttrs
    */
   @action onUpdatedAttrs() {
-    let oldSelect = this.oldSelect;
-    let newSelect = (this.oldSelect = get(this, 'args.select'));
+    const oldSelect = this.oldSelect;
+    const newSelect = (this.oldSelect = this.args.select);
     if (!oldSelect) {
       return;
     }
@@ -38,14 +39,14 @@ export default class PowerSelectTypeaheadTrigger extends Component {
      * the select box.
      */
     if (oldSelect.isOpen && !newSelect.isOpen && newSelect.searchText) {
-      let input = document.querySelector(
+      const input = document.querySelector(
         `#ember-power-select-typeahead-input-${newSelect.uniqueId}`,
       );
-      let newText = this.getSelectedAsText();
+      const newText = this.getSelectedAsText();
       if (input.value !== newText) {
         input.value = newText;
       }
-      set(this, 'text', newText);
+      this.text = newText;
     }
 
     if (newSelect.lastSearchedText !== oldSelect.lastSearchedText) {
@@ -57,7 +58,7 @@ export default class PowerSelectTypeaheadTrigger extends Component {
     }
 
     if (oldSelect.selected !== newSelect.selected) {
-      set(this, 'text', this.getSelectedAsText());
+      this.text = this.getSelectedAsText();
     }
   }
 
@@ -80,24 +81,25 @@ export default class PowerSelectTypeaheadTrigger extends Component {
    * @param {Object} event
    */
   @action handleKeydown(e) {
+    const select = this.args.select;
+
     // up or down arrow and if not open, no-op and prevent parent handlers from being notified
-    if ([38, 40].includes(e.keyCode) && !get(this, 'args.select.isOpen')) {
+    if ([38, 40].includes(e.keyCode) && !select.isOpen) {
       e.stopPropagation();
       return;
     }
-    let isLetter = (e.keyCode >= 48 && e.keyCode <= 90) || e.keyCode === 32; // Keys 0-9, a-z or SPACE
+    const isLetter = (e.keyCode >= 48 && e.keyCode <= 90) || e.keyCode === 32; // Keys 0-9, a-z or SPACE
     // if isLetter, escape or enter, prevent parent handlers from being notified
     if (isLetter || [13, 27].includes(e.keyCode)) {
-      let select = get(this, 'args.select');
       // open if loading msg configured
-      if (!select.isOpen && get(this, 'args.loadingMessage')) {
+      if (!select.isOpen && this.args.loadingMessage) {
         schedule('actions', null, select.actions.open);
       }
       e.stopPropagation();
     }
 
     // optional, passed from power-select
-    let onkeydown = get(this, 'args.onKeydown');
+    const onkeydown = this.args.onKeydown;
     if (onkeydown && onkeydown(e) === false) {
       return false;
     }
@@ -110,8 +112,8 @@ export default class PowerSelectTypeaheadTrigger extends Component {
    * @method getSelectedAsText
    */
   getSelectedAsText() {
-    let path = get(this, 'args.extra.labelPath');
-    let value = get(this, `args.select.selected${path ? `.${path}` : ''}`);
+    const path = this.args.extra?.labelPath?.replace(/^/, '.');
+    const value = this.args.select[`selected${path}`];
     return value === undefined ? '' : value;
   }
 }
