@@ -1,8 +1,8 @@
-/* eslint-disable ember/no-observers, ember/no-runloop */
+/* eslint-disable ember/no-observers */
 import { addObserver, removeObserver } from '@ember/object/observers';
+import { task, waitForQueue } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { schedule } from '@ember/runloop';
 import { isBlank } from '@ember/utils';
 import { action } from '@ember/object';
 
@@ -51,11 +51,8 @@ export default class PowerSelectTypeaheadTrigger extends Component {
     }
 
     if (newSelect.lastSearchedText !== oldSelect.lastSearchedText) {
-      if (isBlank(newSelect.lastSearchedText)) {
-        schedule('actions', null, newSelect.actions.close, null, true);
-      } else {
-        schedule('actions', null, newSelect.actions.open);
-      }
+      const toClose = isBlank(newSelect.lastSearchedText);
+      this.selectActionTask.perform(newSelect, toClose);
     }
 
     if (oldSelect.selected !== newSelect.selected) {
@@ -94,7 +91,7 @@ export default class PowerSelectTypeaheadTrigger extends Component {
     if (isLetter || [13, 27].includes(e.keyCode)) {
       // open if loading msg configured
       if (!select.isOpen && this.args.loadingMessage) {
-        schedule('actions', null, select.actions.open);
+        this.selectActionTask.perform(select, false);
       }
       e.stopPropagation();
     }
@@ -118,4 +115,15 @@ export default class PowerSelectTypeaheadTrigger extends Component {
     if (path && value) value = value[path];
     return value === undefined ? '' : value;
   }
+
+  /**
+   * Schedules open/close action on Select API
+   *
+   * @private
+   * @method selectActionTask
+   */
+  selectActionTask = task({ enqueue: true }, async ({ actions }, toClose) => {
+    await waitForQueue('actions');
+    toClose ? actions.close(null, true) : actions.open();
+  });
 }

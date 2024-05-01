@@ -35,9 +35,6 @@ importers:
       decorator-transforms:
         specifier: ^1.0.1
         version: 1.2.1(@babel/core@7.24.5)
-      ember-concurrency:
-        specifier: ^4.0.2
-        version: 4.0.2(@babel/core@7.24.5)(@glimmer/tracking@1.1.2)(ember-source@5.8.0)
       ember-source:
         specifier: ^3.28.0 || ^4.0.0 || >=5.0.0
         version: 5.8.0(@babel/core@7.24.5)(@glimmer/component@1.1.2)(rsvp@4.8.5)(webpack@5.91.0)
@@ -66,6 +63,9 @@ importers:
       ember-basic-dropdown:
         specifier: ^8.0.0
         version: 8.0.4(@ember/string@3.1.1)(@ember/test-helpers@3.3.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-source@5.8.0)
+      ember-concurrency:
+        specifier: ^4.0.2
+        version: 4.0.2(@babel/core@7.24.5)(@glimmer/tracking@1.1.2)(ember-source@5.8.0)
       ember-power-select:
         specifier: ^8.0.0
         version: 8.1.0(@babel/core@7.24.5)(@ember/test-helpers@3.3.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-basic-dropdown@8.0.4)(ember-concurrency@4.0.2)(ember-source@5.8.0)
@@ -4085,6 +4085,7 @@ packages:
     dependencies:
       '@glimmer/env': 0.1.7
       '@glimmer/validator': 0.44.0
+    dev: true
 
   /@glimmer/util@0.44.0:
     resolution: {integrity: sha512-duAsm30uVK9jSysElCbLyU6QQYO2X9iLDLBIBUcCqck9qN1o3tK2qWiHbGK5d6g8E2AJ4H88UrfElkyaJlGrwg==}
@@ -4111,6 +4112,7 @@ packages:
 
   /@glimmer/validator@0.44.0:
     resolution: {integrity: sha512-i01plR0EgFVz69GDrEuFgq1NheIjZcyTy3c7q+w7d096ddPVeVcRzU3LKaqCfovvLJ+6lJx40j45ecycASUUyw==}
+    dev: true
 
   /@glimmer/validator@0.84.3:
     resolution: {integrity: sha512-RTBV4TokUB0vI31UC7ikpV7lOYpWUlyqaKV//pRC4pexYMlmqnVhkFrdiimB/R1XyNdUOQUmnIAcdic39NkbhQ==}
@@ -9371,6 +9373,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: true
 
   /ember-data@5.3.3(@babel/core@7.24.4)(@ember/string@3.1.1)(@glint/template@1.4.0)(ember-source@5.7.0):
     resolution: {integrity: sha512-T8+cfFtkZ9hPZ+7t1SAjXkAqvW3dSpY83IuOzUZf7kgoiJkR0C3cQTBteULrseDR9GoKQOkmiWrTphRzyy9RFg==}

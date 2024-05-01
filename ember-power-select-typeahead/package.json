@@ -49,6 +49,7 @@
     "babel-plugin-ember-template-compilation": "^2.2.1",
     "concurrently": "^8.2.2",
     "ember-basic-dropdown": "^8.0.0",
+    "ember-concurrency": "^4.0.2",
     "ember-power-select": "^8.0.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.56.0",
