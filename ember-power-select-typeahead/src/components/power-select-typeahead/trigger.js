@@ -31,6 +31,7 @@ export default class PowerSelectTypeaheadTrigger extends Component {
     let oldSelect = this.oldSelect;
     let newSelect = (this.oldSelect = get(this, 'args.select'));
     if (!oldSelect) {
+      set(this, 'text', this.getSelectedAsText());
       return;
     }
     /*

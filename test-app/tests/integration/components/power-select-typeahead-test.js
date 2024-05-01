@@ -72,6 +72,22 @@ module('Integration | Component | <PowerSelectTypeahead>', function (hooks) {
     );
   });
 
+  test('It presents the selected option upon creation', async function (assert) {
+    assert.expect(1);
+    this.numbers = numbers;
+    this.selected = 'seven';
+    await render(hbs`
+      <PowerSelectTypeahead @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |number|>
+        {{number}}
+      </PowerSelectTypeahead>
+    `);
+    assert.strictEqual(
+      find('.ember-power-select-search-input').value,
+      'seven',
+      'The input contains the selected option',
+    );
+  });
+
   test('Removing a few characters and selecting the same option that is already selected updates the text of the input', async function (assert) {
     assert.expect(5);
     this.countries = countries;
