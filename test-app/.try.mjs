@@ -56,30 +56,29 @@ export default {
         },
       },
     },
-    // TODO: Ember 7.x compatibility
-    // {
-    //   name: 'ember-latest',
-    //   npm: {
-    //     devDependencies: {
-    //       'ember-source': 'npm:ember-source@latest',
-    //     },
-    //   },
-    // },
-    // {
-    //   name: 'ember-beta',
-    //   npm: {
-    //     devDependencies: {
-    //       'ember-source': 'npm:ember-source@beta',
-    //     },
-    //   },
-    // },
-    // {
-    //   name: 'ember-alpha',
-    //   npm: {
-    //     devDependencies: {
-    //       'ember-source': 'npm:ember-source@alpha',
-    //     },
-    //   },
-    // },
+    {
+      name: 'ember-latest',
+      npm: {
+        devDependencies: {
+          'ember-source': 'npm:ember-source@latest',
+        },
+      },
+    },
+    {
+      name: 'ember-beta',
+      npm: {
+        devDependencies: {
+          'ember-source': 'npm:ember-source@beta',
+        },
+      },
+    },
+    {
+      name: 'ember-alpha',
+      npm: {
+        devDependencies: {
+          'ember-source': 'npm:ember-source@alpha',
+        },
+      },
+    },
   ],
 };
