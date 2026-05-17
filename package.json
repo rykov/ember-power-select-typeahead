@@ -11,8 +11,8 @@
     "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm --filter ember-power-select-typeahead start --no-watch.clearScreen",
     "start:test-app": "pnpm --filter test-app start",
-    "test": "pnpm --filter '*' test",
-    "test:ember": "pnpm --filter '*' test:ember"
+    "test": "pnpm --filter test-app test",
+    "test:ember": "pnpm --filter test-app test:ember"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
